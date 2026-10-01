@@ -6,6 +6,11 @@ class GameScene extends Phaser.Scene {
         super({ key: 'GameScene' });
     }
 
+    preload() {
+        // Substitua o caminho pelo local correto do seu arquivo na pasta do projeto (ex: 'assets/platao.png')
+        this.load.image('platao', 'sprites/pratao-sprite.png');
+    {
+
     create() {
         this.p1Health = 100;
         this.p2Health = 100;
@@ -21,9 +26,9 @@ class GameScene extends Phaser.Scene {
         this.physics.add.existing(chao, true);
 
         // 2. Jogadores
-        const rectP1 = this.add.rectangle(0, 0, 50, 100, 0x0064ff);
+        this.player1 = this.physics.add.sprite(200, 300, 'platao');
         this.player1 = this.physics.add.existing(rectP1);
-        this.player1.body.setCollideWorldBounds(true);
+        this.player1.setCollideWorldBounds(true);
         this.player1.body.setFriction(1, 1);
         this.player1.setPosition(200, 300);
 
@@ -220,8 +225,7 @@ class GameScene extends Phaser.Scene {
                 acertou = true;
                 const idAlvo = idAtacante === 1 ? 2 : 1;
 
-                this.causarDano(idAlvo, 4);
-                this.aplicarKnockback(alvo, direcao, 350, 0);
+                this.receberGolpe(idAlvo, 4, idAtacante, direcao);
 
                 this.adicionarEnergia(idAtacante, 8);
                 this.adicionarEnergia(idAlvo, 4);
