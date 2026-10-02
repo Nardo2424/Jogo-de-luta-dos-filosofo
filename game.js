@@ -8,7 +8,7 @@ class GameScene extends Phaser.Scene {
 
     preload() {
         // Substitua o caminho pelo local correto do seu arquivo na pasta do projeto (ex: 'assets/platao.png')
-        this.load.image('platao', 'sprites/pratao-sprite.png');
+        this.load.image('platao', 'assets/pratao.png');
     }
 
     create() {
@@ -26,9 +26,10 @@ class GameScene extends Phaser.Scene {
         this.physics.add.existing(chao, true);
 
         // 2. Jogadores
-        this.player1 = this.physics.add.sprite(50, 0, 200, 300, 'platao');
-        this.player1 = this.physics.add.existing(rectP1);
+        this.player1 = this.physics.add.sprite(200, 300, 'platao');
         this.player1.setCollideWorldBounds(true);
+        this.player1 = this.physics.add.existing(platao);
+        this.player1.body.setSize(50, 100);
         this.player1.body.setFriction(1, 1);
         this.player1.setPosition(200, 300);
 
@@ -60,9 +61,13 @@ class GameScene extends Phaser.Scene {
         this.player2.isDashing = false;
 
         // 3. Colisões
-        this.physics.add.collider(this.player1, chao);
-        this.physics.add.collider(this.player2, chao);
-        this.physics.add.collider(this.player1, this.player2);
+        if (this.chao) {
+            this.physics.add.collider(this.player1, chao);
+            this.physics.add.collider(this.player2, chao);
+        }
+        if (this.player2) {
+            this.physics.add.collider(this.player1, this.player2);
+        }
         this.player1.comboCount = 0;
         this.player1.body.setBounce(0, 0);
         this.player2.body.setBounce(0, 0);
@@ -74,7 +79,7 @@ class GameScene extends Phaser.Scene {
             direita: Phaser.Input.Keyboard.KeyCodes.D,
             soco: Phaser.Input.Keyboard.KeyCodes.SPACE,
             especial: Phaser.Input.Keyboard.KeyCodes.E,
-            defesa: Phaser.Input.Keyboard.KeyCodes.C
+            defesa: Phaser.Input.Keyboard.KeyCodes.S
         });
 
         this.keysSetas = this.input.keyboard.addKeys({
@@ -83,7 +88,7 @@ class GameScene extends Phaser.Scene {
             direita: Phaser.Input.Keyboard.KeyCodes.RIGHT,
             soco: Phaser.Input.Keyboard.KeyCodes.ENTER,
             especial: Phaser.Input.Keyboard.KeyCodes.L,
-            defesa: Phaser.Input.Keyboard.KeyCodes.P
+            defesa: Phaser.Input.Keyboard.KeyCodes.DOWN
         });
 
         // 5. Interface (HUD)
