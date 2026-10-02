@@ -9,7 +9,7 @@ class GameScene extends Phaser.Scene {
     preload() {
         // Substitua o caminho pelo local correto do seu arquivo na pasta do projeto (ex: 'assets/platao.png')
         this.load.image('platao', 'sprites/pratao-sprite.png');
-    {
+    }
 
     create() {
         this.p1Health = 100;
@@ -26,7 +26,7 @@ class GameScene extends Phaser.Scene {
         this.physics.add.existing(chao, true);
 
         // 2. Jogadores
-        this.player1 = this.physics.add.sprite(200, 300, 'platao');
+        this.player1 = this.physics.add.sprite(50, 0, 200, 300, 'platao');
         this.player1 = this.physics.add.existing(rectP1);
         this.player1.setCollideWorldBounds(true);
         this.player1.body.setFriction(1, 1);
